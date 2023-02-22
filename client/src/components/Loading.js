@@ -1,7 +1,9 @@
-import React from 'react'
+import React from "react";
 
 export default function Loading() {
   return (
-    <div>Loading</div>
-  )
+    <div className="app">
+      <h2>Loading...</h2>
+    </div>
+  );
 }
