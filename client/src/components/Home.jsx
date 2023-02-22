@@ -8,6 +8,24 @@ export default function Home() {
   const [currentTech, setCurrentTech] = useState("");
   const [headshot, setHeadshot] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [companyInfo, setCompanyInfo] = useState([{ name: "", position: "" }]);
+
+  const handleAddCompany = () => {
+    setCompanyInfo([...companyInfo, { name: "", position: "" }]);
+  };
+
+  const handleRemoveCompany = (index) => {
+    const list = [...companyInfo];
+    list.splice(index, 1);
+    setCompanyInfo(list);
+  };
+
+  const handleUpdateCompany = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...companyInfo];
+    list[index][name] = value;
+    setCompanyInfo(list);
+  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
