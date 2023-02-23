@@ -104,6 +104,47 @@ export default function Home() {
         accept="image/x-png, image/jpeg"
         onChange={(e) => setHeadshot(e.target.files[0])}
       />
+      <h3>Company you have worked at</h3>
+      {companyInfo.map((company, index) => {
+        return (
+          <div className="nestedContainer" key={index}>
+            <div className="companies">
+              <label htmlFor="name">Company Name</label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                required
+                onChange={(e) => handleUpdateCompany(e, index)}
+              />
+            </div>
+            <div className="companies">
+              <label htmlFor="position">Position</label>
+              <input
+                type="text"
+                name="position"
+                required
+                onChange={(e) => handleUpdateCompany(e, index)}
+              />
+            </div>
+            <div className="btn__group">
+              {companyInfo.length - 1 === index && companyInfo.length < 4 && (
+                <button id="addBtn" onClick={handleAddCompany}>
+                  Add
+                </button>
+              )}
+              {companyInfo.length > 1 && (
+                <button
+                  id="deleteBtn"
+                  onClick={() => handleRemoveCompany(index)}
+                >
+                  Delete
+                </button>
+              )}
+            </div>
+          </div>
+        );
+      })}
       <button>Create your resume</button>
     </div>
   );
