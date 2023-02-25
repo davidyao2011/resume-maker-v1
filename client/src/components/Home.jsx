@@ -29,13 +29,23 @@ export default function Home() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log({
-      fullName,
-      currentPosition,
-      currentLength,
-      currentTech,
-      headshot,
-    });
+    const formData = new FormData();
+    formData.append("headshotImage", headshot, headshot.name);
+    formData.append("fullName", fullName);
+    formData.append("currentPosition", currentPosition);
+    formData.append("currentLength", currentLength);
+    formData.append("currentTech", currentTech);
+    formData.append("workHistory", Json.stringify(companyInfo));
+
+    axios
+      .post("http://localhost:4000/resume/create", formData, {})
+      .then((res) => {
+        if (res.data.message) {
+          console.log(res.data.data);
+          navigate("/resume");
+        }
+      })
+      .catch((err) => console.error(err));
     setLoading(true);
   };
   if (loading) {
