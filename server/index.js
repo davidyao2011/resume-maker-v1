@@ -30,6 +30,16 @@ app.get("/", (req, res) => {
   });
 });
 
+app.post("/resume/create", upload.single("headshotImage"), async (req, res) => {
+  const { fullName, currentPosition, currentLength, currentTech, workHistory } =
+    req.body;
+  console.log(req.body);
+  res.json({
+    message: "request is made successfully",
+    data: {},
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server is listening on ${PORT}`);
 });
