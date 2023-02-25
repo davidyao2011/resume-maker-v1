@@ -64,6 +64,15 @@ app.post("/resume/create", upload.single("headshotImage"), async (req, res) => {
     currentTech,
     workHistory: workArray,
   };
+
+  const remainderText = () => {
+    let newText = "";
+    for (let i = 0; i < workArray.length; i++) {
+      newText += `${workArray[i].name} as a ${workArray[i].position}`;
+    }
+    return newText;
+  };
+  
   res.json({
     message: "request is made successfully",
     data: {},
