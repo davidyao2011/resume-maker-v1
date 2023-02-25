@@ -50,6 +50,8 @@ app.get("/", (req, res) => {
   });
 });
 
+let database = [];
+
 app.post("/resume/create", upload.single("headshotImage"), async (req, res) => {
   const { fullName, currentPosition, currentLength, currentTech, workHistory } =
     req.body;
@@ -72,10 +74,25 @@ app.post("/resume/create", upload.single("headshotImage"), async (req, res) => {
     }
     return newText;
   };
-  
+
+  const prompt1 = `I am writing a resume, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n I write in the technolegies: ${currentTechnologies}. Can you write a 100 words description for the top of the resume(first person writing)?`;
+  //👇🏻 The job responsibilities prompt
+  const prompt2 = `I am writing a resume, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n I write in the technolegies: ${currentTechnologies}. Can you write 10 points for a resume on what I am good at?`;
+  //👇🏻 The job achievements prompt
+  const prompt3 = `I am writing a resume, my details are \n name: ${fullName} \n role: ${currentPosition} (${currentLength} years). \n During my years I worked at ${
+    workArray.length
+  } companies. ${remainderText()} \n Can you write me 50 words for each company seperated in numbers of my succession in the company (in first person)?`;
+
+  const objective = await GPTFunction(promp1);
+  const keypoints = await GPTFunction(promp2);
+  const jobResponsibilities = await GPTFunction(promp3);
+  const chatgptData = { objective, keypoints, jobResponsibilities };
+
+  const data = { ...newEntry, ...chatgptData };
+  database.push(data);
   res.json({
     message: "request is made successfully",
-    data: {},
+    data,
   });
 });
 
